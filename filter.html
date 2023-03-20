@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+
+    var productArray = new Array("Diet Coke", "Iced Coffee", "Cream Soda", "Boba Tea", "Root Beer", "Strawberry Milk", "Vitamin Smoothie", "Milkshake", "Iced Tea");
+    
+    //This populates the original list on load, and the filtered list whenever input happens
+    function populateList(container, array) {
+        var innerString = "";
+        for (var i=0; i < array.length; i++) {
+            innerString += "<li>" + array[i] + "</li>";
+        }
+        container.innerHTML = innerString;
+    }
+
+    //This does string compare whenever the user types in the field
+    function searchProducts() {
+        
+        var filteredArray = new Array();
+        var currentStr = this.value;
+
+        for (var i=0; i < productArray.length; i++) {
+
+            var formattedStr = productArray[i].toLowerCase();
+            if(formattedStr.includes(currentStr.toLowerCase())) {
+                filteredArray.push(productArray[i]); //If there is a match, push that product into the filtered array
+            }
+        }
+
+        //Display the new filtered array in the filtered <ul> container
+        populateList(filteredContainer, filteredArray);
+    } 
+
+</script>
+</head>
+<body>
+
+    <h1>Products:</h1>
+    <ul id="productList">
+
+
+    </ul>
+
+    <h1>Search Filter:</h1>
+    <ul id="filteredList">
+
+
+    </ul>
+
+    Search for a product: <input type="text" id="productQuery" name="productQuery"><br>
+
+    <script>
+        //These all don't exist until the DOM loads so they have to go down here or create a DOM load event listener/callback
+        var productContainer = document.getElementById("productList");
+        var filteredContainer = document.getElementById("filteredList");
+        var searchInput = document.getElementById("productQuery");
+
+        searchInput.addEventListener("input", searchProducts); //Can use the event "change" but then you have to press enter to see it work
+        populateList(productContainer, productArray);
+    </script>
+</body>
+</html>
